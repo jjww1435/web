@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="webproject.mapper.AccountMapper">
+	<!-- resulttype是查询出的每条结果的类型 -->
+	<select id="selectAccountList" resultType="webproject.model.Account">
+		select * from t_account
+	</select>
+	<select id="selectAccountById" parameterType="int" resultType="webproject.model.Account" >
+		select id,username,password,age from t_account where id=#{value}
+	</select>
+	<insert id="insertAccount" parameterType="webproject.model.Account">
+		insert into t_account (id,username,password,age)value(#{id},#{username},#{password},#{age}) 
+	</insert>
+	<update id="updateAccount" parameterType="webproject.model.Account">
+		update t_account
+		<set>
+			<if test="id!=null">
+				id=#{id},
+			</if>
+			<if test="username!=null">
+				username=#{username},
+			</if>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="age!=null">
+				age=#{age}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteAccountById" parameterType="int">
+		delete from t_account where id=#{value}
+	</delete>
+</mapper>
